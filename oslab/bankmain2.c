@@ -1,4 +1,4 @@
-
+#include<stdio.h>
 int pno,res;
 int allocation[20][10],max[10][10],need[20][10],available[10],work[10],i,j;
 int check()
