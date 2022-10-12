@@ -1,57 +1,62 @@
 #include<stdio.h>
-#include<string.h>
-void main()
+ int main()
 {
- int n,i,ct[10],wt,st,bt,temp,j;
-float tb,tw;
-wt=0;
-st=0;
-bt=0;
-tb=0;
-tw=0;
-char proc[10][10],ta[10];
-printf("Enter the no of process:");
-scanf("%d",&n);
-for(i=0;i<n;i++)
-{
-printf("\nenter process name:");
-scanf("%s",proc[i]);
-printf("Enter the cpu time:");
-scanf("%d",&ct[i]);
+    int bt[20],p[20],wt[20],tat[20],i,j,n,total=0,pos,temp;
+    float avg_wt,avg_tat;
+    printf("Enter number of process:");
+    scanf("%d",&n);
+  
+    printf("\nEnter Burst Time:\n");
+    for(i=0;i<n;i++)
+    {
+        printf("p%d:",i+1);
+        scanf("%d",&bt[i]);
+        p[i]=i+1;         
+    }
+  
+   //sorting of burst times
+    for(i=0;i<n;i++)
+    {
+        pos=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(bt[j]<bt[pos])
+                pos=j;
+        }
+  
+        temp=bt[i];
+        bt[i]=bt[pos];
+        bt[pos]=temp;
+  
+        temp=p[i];
+        p[i]=p[pos];
+        p[pos]=temp;
+    }
+   
+    wt[0]=0;            
+  
+   
+    for(i=1;i<n;i++)
+    {
+        wt[i]=0;
+        for(j=0;j<i;j++)
+            wt[i]+=bt[j];
+  
+        total+=wt[i];
+    }
+  
+    avg_wt=(float)total/n;      
+    total=0;
+  
+    printf("\nProcess    Burst Time    \tWaiting Time\tTurnaround Time");
+    for(i=0;i<n;i++)
+    {
+        tat[i]=bt[i]+wt[i];   
+        total+=tat[i];
+        printf("\np%d\t\t  %d\t\t    %d\t\t\t%d",p[i],bt[i],wt[i],tat[i]);
+    }
+  
+    avg_tat=(float)total/n;    
+    printf("\n\nAverage Waiting Time=%f",avg_wt);
+    printf("\nAverage Turnaround Time=%f\n",avg_tat);
 }
-
-for(i=0;i<n;i++)
-{
-for(j=i;j<n-i-1;j++)
-{
-if(ct[j]>ct[j+1])
-{
-temp=ct[j];
-ct[j]=ct[j+1];
-ct[j+1]=temp;
-strcpy(ta,proc[j]);
-strcpy(proc[j],proc[j+1]);
-strcpy(proc[j+1],ta);
-}
-}
-}
-
-for(i=0;i<n;i++)
-{
-printf("%s\t",proc[i]);
-printf("%d\t",ct[i]);
-}
-printf("\nProcess name\tStart Time\tWait time\tBurst Time\n");
-for(i=0;i<n;i++)
-{
-st=bt;
-wt=st;
-bt=bt+ct[i];
-printf("%s\t\t%d\t\t%d\t\t%d\n",proc[i],st,wt,bt);
-tw=tw+wt;
-tb=tb+bt;
-}
-printf("\naverage waiting time=%f\n",(tw/n));
-printf("\nAverage turn around time=%f\n",(tb/n));
-}
-
