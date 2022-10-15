@@ -5,13 +5,13 @@ void main()
 int bt[10],tt[10],wt[10],n,b[10],i,j,w=0,t=0;
 char a[10];
 float p,q;
-printf("enter the number of process");
+printf("Enter the number of process:-\n");
 scanf("%d",&n);
 for(i=0;i<n;i++)
 {
-printf("\nenter the process name");
+printf("\nEnter the process name:-\n");
 scanf("%s",&a[i]);
-printf("\n enter the cpu burst time");
+printf("\nEnter the cpu burst time:-\n");
 scanf("%d",&b[i]);
 }
 tt[0]=0;
@@ -23,17 +23,17 @@ tt[j]=bt[j-1];
 wt[j]=tt[j];
 bt[j]=tt[j]+b[j];
 }
-printf("\n process name");
-printf("\t\tWaiting time:");
-printf("\t\tTurnaround time:");
+printf("\nProcess Name");
+printf("\tWaiting Time:");
+printf("\tTurnaround Time:");
 for(i=0;i<n;i++)
 {
-printf("\n%c\t%d\t%d\n",a[i],tt[i],bt[i]);
+printf("\n%c\t\t%d\t\t%d\n",a[i],tt[i],bt[i]);
 w=w+wt[i];
 t=t+bt[i];
 }
 p=(float)w/n;
 q=(float)t/n;
-printf("\n avg waiting time:%f",p);
-printf("\n avg turnaround time:%f\n",q);
+printf("\nAvg Waiting Time:- %f",p);
+printf("\nAvg Turnaround Time:- %f\n",q);
 }
